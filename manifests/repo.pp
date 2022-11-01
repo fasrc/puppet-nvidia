@@ -2,7 +2,7 @@
 class nvidia::repo (
   Boolean $manage_repo   = true,
   String  $repo_ensure   = 'present',
-  String  $repo_baseurl  = "http://fasrc-mirror.s3-website-us-east-1.amazonaws.com/cuda-el%{::lsbmajdistrelease}",
+  String  $repo_baseurl  = "http://fasrc-mirror.s3-website-us-east-1.amazonaws.com/cuda-el${::operatingsystemmajrelease}",
   Integer $repo_gpgcheck = 0,
   Integer $repo_enabled  = 1,
   String  $repo_proxy    = '_none_',
