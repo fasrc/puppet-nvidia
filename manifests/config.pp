@@ -2,6 +2,6 @@ class nvidia::config {
   service { 'nvidia-persistenced':
     enable => true,
     ensure => 'running',
-    require => Package['nvidia-persistenced'],
+    require => File['/usr/lib/systemd/system/nvidia-persistenced.service'],
   }
 }
