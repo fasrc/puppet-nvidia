@@ -4,5 +4,6 @@ class nvidia::install (
   package { 'cuda-drivers':
     ensure  => $version,
     require => Yumrepo['cuda'],
-  } ~> exec { '/usr/sbin/dkms autoinstall -m nvidia': }
+    notify  => Exec['/usr/sbin/dkms autoinstall -m nvidia'],
+  }
 }
