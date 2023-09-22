@@ -1,0 +1,12 @@
+[Unit]
+Description=Enables nvidia-peermem
+DefaultDependencies=no
+After=sysinit.target local-fs.target
+Before=basic.target nvidia-persistenced.service systemd-resolved.service
+
+[Service]
+Type=oneshot
+ExecStart=-/usr/sbin/modprobe nvidia-peermem
+
+[Install]
+WantedBy=multi-user.target
