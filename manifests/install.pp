@@ -1,6 +1,8 @@
 class nvidia::install (
   String $version         = 'installed',
   String $gdrcopy_version = 'installed',
+  Array  $ucx_pkgs        = ['ucx-cuda','ucx-gdrcopy'],
+  String $ucx_version     = 'present',
 ){
   package { 'cuda-drivers':
     ensure  => $version,
@@ -22,5 +24,10 @@ class nvidia::install (
   exec { 'build-dkms-gdrcopy-module':
     command => '/usr/sbin/dkms autoinstall -m gdrcopy',
     refreshonly => true,
+  }
+
+  package { $ucx_pkgs:
+    ensure  => $ucx_version,
+    require => Package['gdrcopy'],
   }
 }
