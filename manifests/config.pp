@@ -10,6 +10,5 @@ class nvidia::config {
   systemd::unit_file { 'nvidia-peermem.service':
     content => file('nvidia/nvidia-peermem.service'),
     enable  => true,
-    active  => true,
   }
 }
