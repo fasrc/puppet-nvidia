@@ -13,7 +13,7 @@ class nvidia::install (
     refreshonly => true,
   }
 
-  package { ['gdrcopy','gdrcopy-kmod','gdrcopy-devel']::
+  package { ['gdrcopy','gdrcopy-kmod','gdrcopy-devel']:
     ensure  => $gdrcopy_version,
     require => Package['cuda-drivers'],
     notify  => Exec['build-dkms-gdrcopy-module'],
