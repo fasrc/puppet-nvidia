@@ -11,10 +11,4 @@ class nvidia::config {
     content => file('nvidia/nvidia-peermem.service'),
     enable  => true,
   }
-
-  file { '/etc/modprobe.d/nvidia.conf':
-    source => 'puppet:///modules/nvidia/nvidia.conf',
-    owner  => 'root',
-    group  => 'root',
-  }
 }
