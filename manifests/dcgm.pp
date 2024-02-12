@@ -10,4 +10,15 @@ class nvidia::dcgm {
       Package['datacenter-gpu-manager'],
     ],
   }
+
+  package { 'dcgm-exporter':
+    ensure => latest,
+  }
+  service { 'prometheus-dcgm-exporter':
+    ensure => 'running',
+    enable => true,
+    require => [
+      Package['dcgm-exporter'],
+    ],
+  }
 }
