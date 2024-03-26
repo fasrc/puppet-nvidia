@@ -4,9 +4,16 @@ class nvidia::install (
   Array  $ucx_pkgs        = ['ucx-cuda','ucx-gdrcopy'],
   String $ucx_version     = 'present',
 ){
+  package{ 'dkms':
+    ensure=> 'installed'
+  }
+
   package { 'cuda-drivers':
     ensure  => $version,
-    require => Yumrepo['cuda'],
+    require => [ 
+      Yumrepo['cuda'],
+      Package['dkms'],
+    ],
     notify  => Exec['build-dkms-nvidia-module'],
   }
 
