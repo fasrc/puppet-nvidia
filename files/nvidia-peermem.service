@@ -2,7 +2,7 @@
 Description=Enables nvidia-peermem
 DefaultDependencies=no
 After=sysinit.target local-fs.target nvidia-persistenced.service
-Before=basic.target systemd-resolved.service
+Before=systemd-resolved.service
 
 [Service]
 Type=oneshot
