@@ -3,7 +3,7 @@ class nvidia::config {
     enable  => true,
     ensure  => 'running',
     require => [
-      Package['cuda-drivers'],
+      Package['nvidia-persistenced'],
     ],
   }
 
