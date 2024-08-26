@@ -19,6 +19,11 @@ class nvidia::install (
     notify  => Exec['build-dkms-nvidia-module'],
   }
 
+  file {'/usr/lib64/libnvidia-ml.so':
+    ensure => 'link',
+    target => '/usr/lib64/libnvidia-ml.so.1',
+  }
+  
   exec { 'build-dkms-nvidia-module':
     command => '/usr/sbin/dkms autoinstall -m nvidia',
     refreshonly => true,
