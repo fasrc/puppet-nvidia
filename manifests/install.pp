@@ -6,7 +6,7 @@ class nvidia::install (
   String $ucx_version     = 'present',
 ){
   package { 'kmod-nvidia-latest-dkms':
-    ensure  => 'installed',
+    ensure  => $version,
     require => Yumrepo['cuda'],
   }
 
