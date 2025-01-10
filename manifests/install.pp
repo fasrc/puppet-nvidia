@@ -2,7 +2,7 @@ class nvidia::install (
   String $version         = 'installed',
   String $gdrcopy_version = 'installed',
   Array  $ucx_pkgs        = ['ucx-cuda','ucx-gdrcopy'],
-  Array  $nvidia_packages = ['nvidia-driver','nvidia-driver-cuda','nvidia-settings','nvidia-xconfig','nvidia-libXNVCtrl-devel','nvidia-persistenced','nvidia-driver-NVML'],
+  Array  $nvidia_packages = ['nvidia-driver','nvidia-driver-cuda','nvidia-settings','nvidia-xconfig','nvidia-libXNVCtrl-devel','nvidia-persistenced','nvidia-driver-NVML','nvidia-container-toolkit'],
   String $ucx_version     = 'present',
 ){
   package { 'kmod-nvidia-latest-dkms':
@@ -25,7 +25,13 @@ class nvidia::install (
   }
   
   exec { 'build-dkms-nvidia-module':
-    command => '/usr/sbin/dkms autoinstall -m nvidia',
+    command     => '/usr/sbin/dkms autoinstall -m nvidia',
+    refreshonly => true,
+    notify      => Exec['build-cdi-config'],
+  }
+
+  exec { 'build-cdi-config':
+    command     => '/usr/bin/nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml',
     refreshonly => true,
   }
 
