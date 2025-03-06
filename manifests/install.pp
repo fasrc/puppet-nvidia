@@ -2,11 +2,16 @@ class nvidia::install (
   String $version         = 'installed',
   String $gdrcopy_version = 'installed',
   Array  $ucx_pkgs        = ['ucx-cuda','ucx-gdrcopy'],
-  Array  $nvidia_packages = ['nvidia-driver','nvidia-driver-cuda','nvidia-settings','nvidia-xconfig','nvidia-libXNVCtrl-devel','nvidia-persistenced','nvidia-driver-NVML','nvidia-container-toolkit'],
+  Array  $nvidia_packages = ['nvidia-driver','nvidia-driver-cuda','nvidia-settings','nvidia-xconfig','nvidia-libXNVCtrl-devel','nvidia-persistenced','nvidia-driver-NVML'],
   String $ucx_version     = 'present',
 ){
   package { 'kmod-nvidia-latest-dkms':
     ensure  => $version,
+    require => Yumrepo['cuda'],
+  }
+
+  package {'nvidia-container-toolkit':
+    ensure  => 'installed',
     require => Yumrepo['cuda'],
   }
 
@@ -33,6 +38,7 @@ class nvidia::install (
   exec { 'build-cdi-config':
     command     => '/usr/bin/nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml',
     refreshonly => true,
+    require     => Package['nvidia-container-toolkit'],
   }
 
   package { ['gdrcopy','gdrcopy-kmod','gdrcopy-devel']:
