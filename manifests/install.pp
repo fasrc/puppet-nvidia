@@ -20,6 +20,7 @@ class nvidia::install (
     require => [ 
       Yumrepo['cuda'],
       Package['kmod-nvidia-latest-dkms'],
+      Package['nvidia-container-toolkit'],
     ],
     notify  => Exec['build-dkms-nvidia-module'],
   }
