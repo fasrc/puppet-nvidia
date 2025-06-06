@@ -26,7 +26,7 @@ class nvidia::install (
   }
 
   package { 'kmod-nvidia-latest-dkms':
-    ensure  => $version,
+    ensure  => $version-$release.$arch,
     require => Yumrepo['cuda'],
   }
 
@@ -36,7 +36,7 @@ class nvidia::install (
   }
 
   package { $nvidia_packages:
-    ensure  => $version,
+    ensure  => $version-$release.$arch,
     require => [ 
       Yumrepo['cuda'],
       Package['kmod-nvidia-latest-dkms'],
