@@ -1,5 +1,6 @@
 class nvidia::install (
-  Boolean $versionlock    = 'false',
+  Boolean $versionlock     = 'false',
+  String  $short_version   = '570.124.06',
   String  $version         = 'installed',
   String  $release         = '1.el8',
   String  $arch            = 'x86_64',
@@ -12,21 +13,21 @@ class nvidia::install (
   if $versionlock {
     yum::versionlock { $nvidia_packages:
       ensure  => present,
-      version => $version,
+      version => $short_version,
       release => $release,
       arch    => $arch,
     }
 
     yum::versionlock { ['kmod-nvidia-latest-dkms','nvidia-modprobe']:
       ensure  => present,
-      version => $version,
+      version => $short_version,
       release => $release,
       arch    => $arch,
     }
   }
 
   package { 'kmod-nvidia-latest-dkms':
-    ensure  => $version-$release.$arch,
+    ensure  => $version,
     require => Yumrepo['cuda'],
   }
 
@@ -36,7 +37,7 @@ class nvidia::install (
   }
 
   package { $nvidia_packages:
-    ensure  => $version-$release.$arch,
+    ensure  => $version,
     require => [ 
       Yumrepo['cuda'],
       Package['kmod-nvidia-latest-dkms'],
