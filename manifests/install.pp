@@ -1,10 +1,30 @@
 class nvidia::install (
-  String $version         = 'installed',
-  String $gdrcopy_version = 'installed',
-  Array  $ucx_pkgs        = ['ucx-cuda','ucx-gdrcopy'],
-  Array  $nvidia_packages = ['nvidia-driver','nvidia-driver-cuda','nvidia-settings','nvidia-xconfig','nvidia-libXNVCtrl-devel','nvidia-persistenced','nvidia-driver-NVML'],
-  String $ucx_version     = 'present',
+  Boolean $versionlock    = 'false',
+  String  $version         = 'installed',
+  String  $release         = '1.el8',
+  String  $arch            = 'x86_64',
+  String  $gdrcopy_version = 'installed',
+  Array   $ucx_pkgs        = ['ucx-cuda','ucx-gdrcopy'],
+  Array   $nvidia_packages = ['nvidia-driver','nvidia-driver-cuda','nvidia-settings','nvidia-xconfig','nvidia-libXNVCtrl-devel','nvidia-persistenced','nvidia-driver-NVML'],
+  String  $ucx_version     = 'present',
 ){
+
+  if $versionlock {
+    yum::versionlock { $nvidia_packages:
+      ensure  => present,
+      version => $version,
+      release => $release,
+      arch    => $arch,
+    }
+
+    yum::versionlock { ['kmod-nvidia-latest-dkms','nvidia-modprobe']:
+      ensure  => present,
+      version => $version,
+      release => $release,
+      arch    => $arch,
+    }
+  }
+
   package { 'kmod-nvidia-latest-dkms':
     ensure  => $version,
     require => Yumrepo['cuda'],
