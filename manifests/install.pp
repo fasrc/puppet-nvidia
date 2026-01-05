@@ -63,6 +63,6 @@ class nvidia::install (
 
   package { $gds_package:
     ensure  => $gds_version,
-    require => Yumrepo['gdrcopy'],
+    require => Package['gdrcopy'],
   }
 }
