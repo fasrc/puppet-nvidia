@@ -1,9 +1,11 @@
 class nvidia::install (
   String  $version         = 'installed',
   String  $gdrcopy_version = 'installed',
+  String  $gds_version     = 'installed',
+  String  $ucx_version     = 'present',
   Array   $ucx_pkgs        = ['ucx-cuda','ucx-gdrcopy'],
   Array   $nvidia_packages = ['nvidia-driver','nvidia-driver-cuda','nvidia-settings','nvidia-xconfig','nvidia-libXNVCtrl-devel','nvidia-persistenced','nvidia-driver-NVML'],
-  String  $ucx_version     = 'present',
+  String  $gds_package     = 'nvidia-gds-12-9',
 ){
 
   package { ['nvidia-modprobe','kmod-nvidia-latest-dkms']:
@@ -57,5 +59,10 @@ class nvidia::install (
   package { $ucx_pkgs:
     ensure  => $ucx_version,
     require => Package['gdrcopy'],
+  }
+
+  package { $gds_package:
+    ensure  => $gds_version,
+    require => Yumrepo['gdrcopy'],
   }
 }
