@@ -1,14 +1,15 @@
 class nvidia::install (
-  String  $version         = 'installed',
-  String  $gdrcopy_version = 'installed',
-  String  $gds_version     = 'installed',
-  String  $ucx_version     = 'present',
-  Array   $ucx_pkgs        = ['ucx-cuda','ucx-gdrcopy'],
-  Array   $nvidia_packages = ['nvidia-driver','nvidia-driver-cuda','nvidia-settings','nvidia-xconfig','nvidia-libXNVCtrl-devel','nvidia-persistenced','nvidia-driver-NVML'],
-  String  $gds_package     = 'nvidia-gds-12-9',
+  String  $version              = 'installed',
+  String  $gdrcopy_version      = 'installed',
+  String  $gds_version          = 'installed',
+  String  $ucx_version          = 'present',
+  Array   $ucx_pkgs             = ['ucx-cuda','ucx-gdrcopy'],
+  Array   $nvidia_packages      = ['nvidia-driver','nvidia-driver-cuda','nvidia-settings','nvidia-xconfig','nvidia-libXNVCtrl-devel','nvidia-persistenced','nvidia-driver-NVML'],
+  Array   $nvidia_kmod_packages = ['nvidia-modprobe','kmod-nvidia-latest-dkms'],
+  String  $gds_package          = 'nvidia-gds-12-9',
 ){
 
-  package { ['nvidia-modprobe','kmod-nvidia-latest-dkms']:
+  package { $nvidia_kmod_packages:
     ensure  => $version,
     require => Yumrepo['cuda'],
   }
@@ -22,7 +23,7 @@ class nvidia::install (
     ensure  => $version,
     require => [ 
       Yumrepo['cuda'],
-      Package['kmod-nvidia-latest-dkms'],
+      Package[$nvidia_kmod_packages],
       Package['nvidia-container-toolkit'],
     ],
     notify  => Exec['build-dkms-nvidia-module'],
