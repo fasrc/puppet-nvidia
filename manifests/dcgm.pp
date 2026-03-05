@@ -21,6 +21,13 @@ class nvidia::dcgm {
     notify => Service['prometheus-dcgm-exporter'],
   }
 
+  file { '/etc/dcgm-exporter/default-counters.csv':
+    source => 'puppet:///modules/nvidia/default-counters.csv',
+    owner  => 'root',
+    group  => 'root',
+    notify => Service['prometheus-dcgm-exporter'],
+  }
+
   service { 'prometheus-dcgm-exporter':
     ensure => 'running',
     enable => true,
