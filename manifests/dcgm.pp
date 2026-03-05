@@ -1,8 +1,13 @@
 # Installs dcgm and starts service
 class nvidia::dcgm {
   package { 'datacenter-gpu-manager':
+    ensure => absent,
+  }
+
+  package { 'datacenter-gpu-manager-4':
     ensure => latest,
   }
+
   service { 'nvidia-dcgm':
     ensure => 'running',
     enable => true,
@@ -13,7 +18,9 @@ class nvidia::dcgm {
 
   package { 'dcgm-exporter':
     ensure => latest,
+    notify => Service['prometheus-dcgm-exporter'],
   }
+
   service { 'prometheus-dcgm-exporter':
     ensure => 'running',
     enable => true,
