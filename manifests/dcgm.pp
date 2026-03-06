@@ -21,11 +21,17 @@ class nvidia::dcgm {
     notify => Service['prometheus-dcgm-exporter'],
   }
 
-  file { '/etc/dcgm-exporter/default-counters.csv':
-    source => 'puppet:///modules/nvidia/default-counters.csv',
+  file { '/etc/dcgm-exporter/dcgm-counters.csv':
+    source => 'puppet:///modules/nvidia/dcgm-counters.csv',
     owner  => 'root',
     group  => 'root',
     notify => Service['prometheus-dcgm-exporter'],
+  }
+  
+  systemd::dropin_file { '10-config.conf':
+    unit    => 'prometheus-dcgm-exporter.service',
+    content => "[Service]\nExecStart=\nExecStart=/usr/bin/dcgm-exporter -f /etc/dcgm-exporter/dcgm-counters.csv",
+    require => File['/etc/dcgm-exporter/dcgm-counters.csv'],
   }
 
   service { 'prometheus-dcgm-exporter':
