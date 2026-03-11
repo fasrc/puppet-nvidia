@@ -9,6 +9,10 @@ class nvidia::dcgm (
 
   package { 'datacenter-gpu-manager-4':
     ensure => latest,
+    notify => [
+      Service['prometheus-dcgm-exporter'],
+      Service['nvidia-dcgm'],
+    ],
   }
 
   service { 'nvidia-dcgm':
