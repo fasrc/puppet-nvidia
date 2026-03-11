@@ -1,6 +1,6 @@
 # Installs dcgm and starts service
 class nvidia::dcgm (
-  String $dcgm_ensure          = 'running',
+  String $dcgm_service_ensure  = 'running',
   String $dcgm_exporter_ensure = 'running',
 ){
   package { 'datacenter-gpu-manager':
@@ -12,7 +12,7 @@ class nvidia::dcgm (
   }
 
   service { 'nvidia-dcgm':
-    ensure => $dcgm_ensure,
+    ensure => $dcgm_service_ensure,
     enable => true,
     require => [
       Package['datacenter-gpu-manager'],
