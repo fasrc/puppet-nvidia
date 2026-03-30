@@ -96,3 +96,8 @@ DCGM_FI_PROF_PIPE_FP32_ACTIVE,   gauge, Ratio of cycles the fp32 pipes are activ
 DCGM_FI_PROF_PIPE_FP16_ACTIVE,   gauge, Ratio of cycles the fp16 pipes are active.
 DCGM_FI_PROF_PCIE_TX_BYTES,      gauge, The rate of data transmitted over the PCIe bus - including both protocol headers and data payloads - in bytes per second.
 DCGM_FI_PROF_PCIE_RX_BYTES,      gauge, The rate of data received over the PCIe bus - including both protocol headers and data payloads - in bytes per second.
+
+# Additional metrics for Kempner
+DCGM_FI_PROF_PIPE_TENSOR_HMMA_ACTIVE, gauge, The ratio of cycles the tensor (HMMA) pipe is active (off the peak sustained elapsed cycles).
+DCGM_FI_PROF_PIPE_TENSOR_IMMA_ACTIVE, gauge, The ratio of cycles the tensor (IMMA) pipe is active (off the peak sustained elapsed cycles).
+DCGM_FI_PROF_PIPE_TENSOR_DFMA_ACTIVE, gauge, The ratio of cycles the tensor (DFMA) pipe is active (off the peak sustained elapsed cycles).
