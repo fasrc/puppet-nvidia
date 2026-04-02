@@ -2,6 +2,7 @@
 class nvidia::dcgm (
   String $dcgm_service_ensure  = 'running',
   String $dcgm_exporter_ensure = 'running',
+  String $nscq_package         = 'libnvidia-nscq-575-575.57.08-1.x86_64',
 ){
   package { 'datacenter-gpu-manager':
     ensure => absent,
@@ -9,6 +10,14 @@ class nvidia::dcgm (
 
   package { 'datacenter-gpu-manager-4':
     ensure => latest,
+    notify => [
+      Service['prometheus-dcgm-exporter'],
+      Service['nvidia-dcgm'],
+    ],
+  }
+
+  package { $nscq_package:
+    ensure => installed,
     notify => [
       Service['prometheus-dcgm-exporter'],
       Service['nvidia-dcgm'],
