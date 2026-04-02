@@ -4,7 +4,7 @@ class nvidia::install (
   String  $gds_version          = 'installed',
   String  $ucx_version          = 'present',
   Array   $ucx_pkgs             = ['ucx-cuda','ucx-gdrcopy'],
-  Array   $nvidia_packages      = ['nvidia-driver','nvidia-driver-cuda','nvidia-settings','nvidia-xconfig','nvidia-libXNVCtrl-devel','nvidia-persistenced','nvidia-driver-NVML'],
+  Array   $nvidia_packages      = ['nvidia-driver','nvidia-driver-cuda','nvidia-settings','nvidia-xconfig','nvidia-libXNVCtrl-devel','nvidia-persistenced','nvidia-driver-NVML','libnvidia-nscq'],
   Array   $nvidia_kmod_packages = ['nvidia-modprobe','kmod-nvidia-latest-dkms'],
   String  $gds_package          = 'nvidia-gds-12-9',
 ){
