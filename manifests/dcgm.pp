@@ -46,7 +46,7 @@ class nvidia::dcgm (
   
   systemd::dropin_file { '10-config.conf':
     unit    => 'prometheus-dcgm-exporter.service',
-    content => "[Service]\nExecStart=\nExecStart=/usr/bin/dcgm-exporter -f /etc/dcgm-exporter/dcgm-counters.csv",
+    content => "[Service]\nExecStart=\nExecStart=/usr/bin/dcgm-exporter -f /etc/dcgm-exporter/dcgm-counters.csv -d f",
     require => File['/etc/dcgm-exporter/dcgm-counters.csv'],
   }
 
