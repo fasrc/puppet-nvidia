@@ -1,4 +1,8 @@
-class nvidia::config {
+class nvidia::config (
+  Boolean $powercap_enable    = false,
+  String  $powercap_service   = 'stopped',
+  String  $powercap           = '550',
+){
   service { 'nvidia-persistenced':
     enable  => true,
     ensure  => 'running',
@@ -16,5 +20,16 @@ class nvidia::config {
     source => 'puppet:///modules/nvidia/nvidia.conf',
     owner  => 'root',
     group  => 'root',
+  }
+  
+  systemd::unit_file { 'nvidia-powercap.service':
+    content => template('nvidia/nvidia-powercap.service.erb'),
+    enable  => $powercap_enable,
+    require => [
+      Package['nvidia-persistenced'],
+    ],
+  }
+  ~> service { 'nvidia-powercap':
+    ensure => $powercap_service,
   }
 }

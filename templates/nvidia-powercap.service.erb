@@ -1,0 +1,10 @@
+[Unit]
+Description=Enforces Nvidia GPU Power Cap
+After=nvidia-persistenced.service
+
+[Service]
+ExecStart=/usr/bin/nvidia-smi -pl <%= @powercap %>
+Type=oneshot
+
+[Install]
+WantedBy=multi-user.target
