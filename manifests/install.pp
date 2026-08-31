@@ -40,8 +40,10 @@ class nvidia::install (
     notify      => Exec['build-cdi-config'],
   }
 
+  # See: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/1.19.1/release-notes.html#known-issues
+  # We need to include the feature flag listed here until we change OS's and get a newer version of podman.
   exec { 'build-cdi-config':
-    command     => '/usr/bin/nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml',
+    command     => '/usr/bin/nvidia-ctk cdi generate --feature-flag no-additional-gids-for-device-nodes --output=/etc/cdi/nvidia.yaml',
     refreshonly => true,
     require     => Package['nvidia-container-toolkit'],
   }
