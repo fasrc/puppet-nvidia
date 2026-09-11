@@ -40,7 +40,7 @@ class nvidia::install (
     notify      => Exec['build-cdi-config'],
   }
 
-  if $facts['os']['family'] == 'RedHat' and $facts['os']['release']['major'] <= 8 {
+  if $facts['os']['family'] == 'RedHat' and versioncmp($facts['os']['release']['major'], '8') <= 0 {
     # See: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/1.19.1/release-notes.html#known-issues
     # We need to include the feature flag listed here until we change OS's and get a newer version of podman.
     exec { 'build-cdi-config':
